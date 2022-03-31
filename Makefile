@@ -151,9 +151,13 @@ release-server-xgo: check-xgo
 
 release-server:
 	# compile
-	GOOS=linux GOARCH=amd64 CGO_ENABLED=1 go build -ldflags '${LDFLAGS}' -o dist/server/linux_amd64/woodpecker-server github.com/woodpecker-ci/woodpecker/cmd/server
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=1 CC=x86_64-linux-gnu-gcc    go build -ldflags '${LDFLAGS}' -o dist/server/linux_amd64/woodpecker-server github.com/woodpecker-ci/woodpecker/cmd/server
+	GOOS=linux GOARCH=arm64 CGO_ENABLED=1 CC=aarch64-linux-gnu-gcc   go build -ldflags '${LDFLAGS}' -o dist/server/linux_arm64/woodpecker-server github.com/woodpecker-ci/woodpecker/cmd/server
+	GOOS=linux GOARCH=arm   CGO_ENABLED=1 CC=arm-linux-gnueabihf-gcc go build -ldflags '${LDFLAGS}' -o dist/server/linux_arm/woodpecker-server   github.com/woodpecker-ci/woodpecker/cmd/server
 	# tar binary files
 	tar -cvzf dist/woodpecker-server_linux_amd64.tar.gz   -C dist/server/linux_amd64 woodpecker-server
+	tar -cvzf dist/woodpecker-server_linux_arm64.tar.gz   -C dist/server/linux_arm64 woodpecker-server
+	tar -cvzf dist/woodpecker-server_linux_arm.tar.gz     -C dist/server/linux_arm   woodpecker-server
 
 release-agent:
 	# compile

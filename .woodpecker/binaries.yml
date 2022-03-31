@@ -24,6 +24,8 @@ pipeline:
     group: build
     image: golang:1.17
     commands:
+      - apt-get update
+      - apt-get install -y crossbuild-essential-arm64 crossbuild-essential-armhf
       - make release-server
     when:
       path:
